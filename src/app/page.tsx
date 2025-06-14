@@ -1,103 +1,117 @@
-import Image from "next/image";
+// pages/index.tsx
+"use client";
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import { HiMenu } from "react-icons/hi";
+import { Button, ButtonGroup, Popover, PopoverTrigger, PopoverContent, Card, CardBody } from "@heroui/react";
+const DynamicMap = dynamic(() => import('../components/Map'), { ssr: false });
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [activeTab, setActiveTab] = useState<'intro' | 'history'>('intro');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <main style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+      <DynamicMap />
+
+      <>
+        {/* Top-left container */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 20,
+            left: 20,
+            zIndex: 10,
+            padding: '10px',
+            borderRadius: '8px',
+            // backgroundColor: 'rgba(255,255,255,0.8)', // optional
+          }}
+        >
+          <h2 style={{ margin: 0 }}>Hong Kong Diaspora Map</h2>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Top-right container */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 20,
+            zIndex: 10,
+            padding: '10px',
+            borderRadius: '8px',
+            // backgroundColor: 'rgba(255,255,255,0.8)', // optional
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <Popover showArrow offset={20} placement="bottom">
+            <PopoverTrigger>
+              <Button radius="full"
+                className="w-[168px] h-[48px] rounded-full bg-white border border-gray-300 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 text-gray-800 font-light
+                    text-[32px] flex items-center justify-center gap-4 shadow-md cursor-pointer"
+                disableRipple={true}
+                startContent={<HiMenu className="text-[32px]" />}
+              >MENU</Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Card
+                isBlurred
+                radius="lg"
+                shadow="lg"
+                className="rounded-[24px] border border-black bg-background/60 dark:bg-default-100/50 w-[780px] h-[580px] p-4"
+              >
+                <CardBody>
+                  <div className="grid grid-cols-12 gap-6 md:gap-4 items-start">
+                    {/* Left Side Buttons */}
+                    <div className="col-span-4">
+                      <ButtonGroup className="flex flex-col gap-4">
+                        <Button
+                          variant={activeTab === 'intro' ? 'solid' : 'ghost'}
+                          disableRipple
+                          className="w-full text-[24px] p-2 cursor-pointer"
+                          onPress={() => setActiveTab('intro')}
+                        >
+                          Introduction
+                        </Button>
+                        <Button
+                          variant={activeTab === 'history' ? 'solid' : 'ghost'}
+                          disableRipple
+                          className="w-full text-[24px] p-2 cursor-pointer"
+                          onPress={() => setActiveTab('history')}
+                        >
+                          History
+                        </Button>
+                      </ButtonGroup>
+                    </div>
+
+                    {/* Right Side Content */}
+                    <div className="col-span-8">
+                      {activeTab === 'intro' && (
+                        <div>
+                          <h2 className="text-2xl font-bold mb-4">Introduction</h2>
+                          <p className="text-md text-default-600">
+                            The Hong Kong Diaspora Map is an interactive project designed to tell the stories of Hongkongers who have migrated to different parts of the world...
+                          </p>
+                        </div>
+                      )}
+
+                      {activeTab === 'history' && (
+                        <div>
+                          <h2 className="text-2xl font-bold mb-4">History</h2>
+                          <p className="text-md text-default-600">
+                            Throughout history, waves of Hong Kong emigration have occurred due to political transitions, economic pressures, and personal freedoms, notably in the 1980s before the 1997 handover and again post-2019...
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </PopoverContent>
+          </Popover>
+
+        </div>
+      </>
+
+
+
+    </main>
   );
 }
